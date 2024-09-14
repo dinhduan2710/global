@@ -27,14 +27,15 @@ You can automatically deploy a local docker wordpress site in 5 minutes
 using the following commands:
 
 ``` bash
-# To Start Website
-make extract
-make start
-make fixpermission
+# Download a wordpress docker-compose example
+git clone https://github.com/dinhduan2710/docker-wordpres.git
+cd wordpress-docker-compose
+# Build and start installation
+docker-compose up -d --build
 ```
 
 Visit your site at <http://localhost> and your database via phpMyAdmin
-at <http://localhost:80>.
+at <http://localhost:8080>.
 
 Default identification for your wordpress website admin:
 
@@ -49,9 +50,13 @@ Default identification for the phpMyAdmin interface:
 **Useful set of commands to know**:
 
 ``` bash
-# git push
-make compress
-git push
+# Stop and remove containers
+docker-compose down
+# Build, and start the wordpress website
+docker-compose up -d --build
+# Reset everything
+docker-compose down
+rm -rf certs/* certs-data/* logs/nginx/* mysql/* wordpress/*
 ```
 
 ## References
@@ -60,3 +65,17 @@ git push
     Docker](https://github.com/mjstealey/wordpress-nginx-docker)
   - [Quickstart: Compose and
     WordPress](https://docs.docker.com/compose/wordpress/)
+
+## Construct
+
+### Essential folders:
+
+- `mysql`: MySQL database files for MariaDB
+- `wordpress`: WordPress web files
+- wpcli contains a Dockerfile example to build WordPress CLI.
+
+### Essential files:
+
+- `.env file`: contain the environment variables required for the wordpress installation
+- `docker-compose.yml`: WordPress docker compose application services
+- `Makefile`: Set of simple bash command lines to build, install and configure WordPress, as well as, to start and stop the docker containers.
